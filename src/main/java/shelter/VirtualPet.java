@@ -3,8 +3,16 @@ package shelter;
 public class VirtualPet {
     private int hungerNeed = 10;
     private int thirstNeed = 10;
-    private int restNeed = 10;
+    private int boredomNeed = 10;
+    private String name;
 
+    public VirtualPet(String name){
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public void feed() {
         hungerNeed -= 2;
@@ -13,6 +21,7 @@ public class VirtualPet {
     int getHungerNeed() {
         return hungerNeed;
     }
+
     public void thirst() {
         thirstNeed -= 2;
     }
@@ -20,17 +29,19 @@ public class VirtualPet {
     int getThirstNeed() {
         return thirstNeed;
     }
-    public void rest(){
-        restNeed -= 2;
-    }
-    int getRestNeed(){
-        return restNeed;
+
+    public void play() {
+        boredomNeed -= 2;
     }
 
-    public void tick () {
+    int getBoredomNeed() {
+        return boredomNeed;
+    }
+
+    public void tick() {
         hungerNeed = hungerNeed + 2;
         thirstNeed = thirstNeed + 2;
-        restNeed = restNeed + 4;
+        boredomNeed = boredomNeed + 4;
     }
 
 }
