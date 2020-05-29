@@ -36,7 +36,7 @@ public class VirtualPetShelter {
         }
     }
 
-    public void adoptPet(String petName) {
+    public void adoptPet (String petName) {
         petShelter.remove(petName);
     }
 
