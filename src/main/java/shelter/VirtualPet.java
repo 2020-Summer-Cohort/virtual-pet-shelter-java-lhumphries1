@@ -6,7 +6,7 @@ public class VirtualPet {
     private int boredomNeed = 10;
     private String name;
 
-    public VirtualPet(String name){
+    public VirtualPet(String name) {
         this.name = name;
     }
 

@@ -3,42 +3,39 @@ package shelter;
 import java.util.Scanner;
 
 public class VirtualPetShelterApp {
+    static Scanner input = new Scanner(System.in);
 
-
-    static void main(String[] args) {
+    public static void main(String[] args) {
         System.out.println("Welcome to the Pet Shelter");
-        System.out.println("Would you like to visit a pet");
-
+        gameLoop(input);
     }
 
-    public static void whatToDo(String petName){
+    public static void whatToDo() {
         System.out.println("Choose your interaction with you pet!");
-        System.out.println("1. Play with " + petName + ". ");
-        System.out.println("2. Give " + petName + " a drink.");
-        System.out.println("3. Feed " + petName + "!");
-        System.out.println("4. Adopt pet" + petName + ".");
+        System.out.println("1. Play with pet. ");
+        System.out.println("2. Play with all pets.");
+        System.out.println("3. Give pets a drink.");
+        System.out.println("4. Feed pets");
+        System.out.println("5. Adopt a pet");
+        System.out.println("6. Add pet to shelter.");
+        System.out.println("7. Do nothing.");
     }
 
-    public void gameLoop(Scanner input, String petName) {
-        String choice;
-        Scanner input = new Scanner(System.in);
+    public static void gameLoop(Scanner input) {
         VirtualPetShelter virtualPetShelter = new VirtualPetShelter();
-        VirtualPet virtualPet = new VirtualPet("");
 
 
         while (true) {
             printPetStatus(virtualPetShelter);
-            System.out.println("");
+            whatToDo();
+            virtualPetShelter.tickPets();
 
-            System.out.println("Play with" + virtualPet.getName() + virtualPet.getBoredomNeed());
-            System.out.println("Give water to" + virtualPet.getName() + virtualPet.getThirstNeed());
-            System.out.println("Feed" + virtualPet.getName() + virtualPet.getHungerNeed());
             int userChoice = input.nextInt();
 
             if (userChoice == 1) {
-                System.out.println("Play with pet friends.");
+                System.out.println("Play with pet friend.");
                 printPetStatus(virtualPetShelter);
-                choice = input.nextLine();
+                String choice = input.nextLine();
                 if (virtualPetShelter.petShelter.containsKey(choice)) {
                     VirtualPet playWithPet = virtualPetShelter.petShelter.get(choice);
                     System.out.println("You picked " + playWithPet.getName());
@@ -48,37 +45,21 @@ public class VirtualPetShelterApp {
                     continue;
                 }
             }
-
-            if (userChoice == 2) {
-                System.out.println("Would you like to give pets a drink");
-                printPetStatus(virtualPetShelter);
-                choice = input.nextLine();
-                if (virtualPetShelter.petShelter.containsKey(choice)) {
-                    VirtualPet waterPets = virtualPetShelter.petShelter.get(choice);
-                    System.out.println("You have given them water!!");
-                    waterPets.thirst();
-                } else {
-                    System.out.println("Iam sorry there no pet with that name");
-                    continue;
-                }
+            if (userChoice == 2){
+                virtualPetShelter.playWithPets();
             }
+
             if (userChoice == 3) {
-                System.out.println("Would you like to feed the pets?");
-                printPetStatus(virtualPetShelter);
-                choice = input.nextLine();
-                if (virtualPetShelter.petShelter.containsKey(choice)) {
-                    VirtualPet feedPets = virtualPetShelter.petShelter.get(choice);
-                    System.out.println("Food makes the pets very happy!!");
-                    feedPets.feed();
-                } else {
-                    System.out.println("Iam sorry there are not pet with that name.");
-                    continue;
-                }
+                virtualPetShelter.waterPets();
+
             }
             if (userChoice == 4) {
+                virtualPetShelter.feedPets();
+            }
+            if (userChoice == 5) {
                 System.out.println("Would you like to adopt a pet.");
                 printPetStatus(virtualPetShelter);
-                choice = input.nextLine();
+                String choice = input.nextLine();
                 if (virtualPetShelter.petShelter.containsKey(choice)) {
                     VirtualPet adoptPet = virtualPetShelter.petShelter.get(choice);
                     System.out.println("You picked " + adoptPet.getName());
@@ -88,11 +69,25 @@ public class VirtualPetShelterApp {
                     break;
                 }
             }
+            if (userChoice == 6) {
+                System.out.println("Admit a pet to the shelter.");
+                System.out.println("What is your pets name?");
+                String newPetName = input.nextLine();
+                VirtualPet newPet = new VirtualPet(newPetName);
+                virtualPetShelter.petShelter.put(newPet.getName(), newPet);
+                printPetStatus(virtualPetShelter);
+            }
+            if (userChoice == 7) {
+                System.out.println("Exit");
+                break;
+
+            }
+
         }
     }
 
 
-    public void printPetStatus(VirtualPetShelter virtualPetShelter) {
+    public static void printPetStatus(VirtualPetShelter virtualPetShelter) {
         for (VirtualPet pet : virtualPetShelter.petShelter.values()) {
             System.out.println("Name " + pet.getName());
             System.out.println("Hunger " + pet.getHungerNeed());
